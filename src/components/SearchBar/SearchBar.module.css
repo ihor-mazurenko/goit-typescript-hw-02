@@ -1,0 +1,24 @@
+.container {
+    padding: 16px;
+    margin-bottom: 20px;
+    position: sticky;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgb(144, 144, 144);
+}
+
+.input {
+    width: 375px;
+    height: 30px;
+    border-radius: 8px;
+    color: #ffff;
+    margin-right: 12px;
+}
+
+.searchBtn {
+    width: 90px;
+    height: 45px;
+    border-radius: 10px;
+    color: #ffff;
+}
