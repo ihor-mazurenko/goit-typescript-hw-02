@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './App.css'
 import toast from 'react-hot-toast'
 
-import { fetchImages } from "../../images-api";
+import { fetchImages, Image } from "../../images-api";
 
 import SearchBar from '../SearchBar/SearchBar'
 import ImageGallery from '../ImageGallery/ImageGallery'
@@ -13,16 +13,16 @@ import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn';
 
 
 function App() {
-  const [images, setImages] = useState([]);
-  const [query, setQuery] = useState("");
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [totalPages, setTotalPages] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(false);
+  const [images, setImages] = useState<Image[]>([]);
+  const [query, setQuery] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   
-  const openModal = (image) => {
+  const openModal = (image: Image) => {
     setSelectedImage(image);
     setIsModalOpen(true);
   };
@@ -51,8 +51,9 @@ function App() {
   }
 
   fetchData();
-}, [query, page]);
-  const handelSearch = (newQuery) => {
+  }, [query, page]);
+  
+  const handelSearch = (newQuery:string) => {
     if (newQuery.trim() === "") {
       toast.error("Please enter a search term!");
       return;
@@ -72,7 +73,7 @@ function App() {
       <SearchBar onSearch={handelSearch} />
       {error && <ErrorMessage message="Try again" />}
       {images.length > 0 && <ImageGallery items={images} onImageClick={openModal} />}
-      {loading && <Loader />}
+      {loading && <Loader loading={loading} />}
       {images.length > 0 && !loading && page < totalPages && (<LoadMoreBtn onClick={handleLoadMore} />
       )}
       <ImageModal
